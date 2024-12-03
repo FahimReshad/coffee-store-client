@@ -2,36 +2,38 @@ import { useContext } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
 
 const SignUp = () => {
-    const {createUser}= useContext(AuthContext);
-    const handleSignUp = e => {
-        e.preventDefault();
-        const form = e.target;
-        const email = form.email.value;
-        const password = form.password.value;
-        console.log(email, password);
-        createUser(email, password)
-        .then(result => {
-            console.log(result.user)
-            // new user has been created
-            const createdAt = result.user?.metadata?.creationTime;
-            const user = {email, createdAt: createdAt};
-            fetch('https://coffee-store-server-8lb1zl3x9-fahim-reshads-projects.vercel.app', {
-                method: 'POST',
-                headers: {
-                    'content-type' : 'application/json'
-                },
-                body: JSON.stringify(user)
-            })
-            .then(res => res.json())
-            .then(data => {
-                console.log(data)
-            })
-        })
-        .catch(error => {
-            console.error(error)
-        })
-
-    }
+  const { createUser } = useContext(AuthContext);
+  const handleSignUp = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const email = form.email.value;
+    const password = form.password.value;
+    console.log(email, password);
+    createUser(email, password)
+      .then((result) => {
+        console.log(result.user);
+        // new user has been created
+        const createdAt = result.user?.metadata?.creationTime;
+        const user = { email, createdAt: createdAt };
+        fetch(
+          "https://coffee-store-server-8lb1zl3x9-fahim-reshads-projects.vercel.app",
+          {
+            method: "POST",
+            headers: {
+              "content-type": "application/json",
+            },
+            body: JSON.stringify(user),
+          }
+        )
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+          });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
   return (
     <div className="flex h-screen items-center justify-center bg-[#8EA7E9]/20 p-6 md:p-0">
       <div className="flex h-full w-full overflow-hidden rounded-xl shadow-md  md:h-[90%] md:w-[80%] lg:h-[80%]">
@@ -55,7 +57,10 @@ const SignUp = () => {
           <h2 className="pb-8 text-center text-3xl font-bold text-[#8EA7E9]">
             Sign Up Here
           </h2>
-          <form onSubmit={handleSignUp} className="flex  w-full flex-col items-center justify-center gap-4">
+          <form
+            onSubmit={handleSignUp}
+            className="flex  w-full flex-col items-center justify-center gap-4"
+          >
             <input
               className="w-[80%] rounded-lg border border-[#8EA7E9] px-6 py-2 focus:outline-none focus:ring-2 focus:ring-[#8EA7E9]/50 md:w-[60%]"
               type="email"
